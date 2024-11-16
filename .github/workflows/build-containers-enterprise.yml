@@ -55,14 +55,14 @@ jobs:
         env: 
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
-          docker tag localhost/thinkthankmedia solomonai/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
-          docker push solomonai/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia feelguuds/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker push feelguuds/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
 
-          docker tag localhost/thinkthankmedia-devcontainer solomonai/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }}
-          docker push solomonai/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia-devcontainer feelguuds/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }}
+          docker push feelguuds/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }}
 
-          docker tag solomonai/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }} solomonai/thinkthankmedia-devcontainer-enterprise:latest
-          docker push solomonai/thinkthankmedia-devcontainer-enterprise:latest
+          docker tag feelguuds/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }} feelguuds/thinkthankmedia-devcontainer-enterprise:latest
+          docker push feelguuds/thinkthankmedia-devcontainer-enterprise:latest
 
   build-container-manifest:
     needs: [build-containers, build-containers-common]
@@ -80,8 +80,8 @@ jobs:
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
           docker manifest create \
-            solomonai/thinkthankmedia-enterprise:latest \
-            solomonai/thinkthankmedia-enterprise:amd64-${{ env.CONTAINERVER }} \
-            solomonai/thinkthankmedia-enterprise:arm64-${{ env.CONTAINERVER }}
+            feelguuds/thinkthankmedia-enterprise:latest \
+            feelguuds/thinkthankmedia-enterprise:amd64-${{ env.CONTAINERVER }} \
+            feelguuds/thinkthankmedia-enterprise:arm64-${{ env.CONTAINERVER }}
 
-          docker manifest push solomonai/thinkthankmedia-enterprise:latest
+          docker manifest push feelguuds/thinkthankmedia-enterprise:latest

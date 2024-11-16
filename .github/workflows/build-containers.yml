@@ -53,14 +53,14 @@ jobs:
         env: 
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
-          docker tag localhost/thinkthankmedia solomonai/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
-          docker push solomonai/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia feelguuds/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker push feelguuds/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
 
-          docker tag localhost/thinkthankmedia-devcontainer solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
-          docker push solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia-devcontainer feelguuds/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
+          docker push feelguuds/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
 
-          docker tag solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }} solomonai/thinkthankmedia-devcontainer:latest
-          docker push solomonai/thinkthankmedia-devcontainer:latest
+          docker tag feelguuds/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }} feelguuds/thinkthankmedia-devcontainer:latest
+          docker push feelguuds/thinkthankmedia-devcontainer:latest
 
   build-container-manifest:
     needs: [build-containers, build-containers-common]
@@ -78,8 +78,8 @@ jobs:
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
           docker manifest create \
-            solomonai/thinkthankmedia:latest \
-            solomonai/thinkthankmedia:amd64-${{ env.CONTAINERVER }} \
-            solomonai/thinkthankmedia:arm64-${{ env.CONTAINERVER }}
+            feelguuds/thinkthankmedia:latest \
+            feelguuds/thinkthankmedia:amd64-${{ env.CONTAINERVER }} \
+            feelguuds/thinkthankmedia:arm64-${{ env.CONTAINERVER }}
 
-          docker manifest push solomonai/thinkthankmedia:latest
+          docker manifest push feelguuds/thinkthankmedia:latest
