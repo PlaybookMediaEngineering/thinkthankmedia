@@ -35,12 +35,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Login to ghcr
+      - name: Login to docker hub
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: docker build
         run: ./var/docker/docker-build.sh
@@ -53,14 +53,14 @@ jobs:
         env: 
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
-          docker tag localhost/postiz ghcr.io/gitroomhq/postiz-app:${{ matrix.arch }}-${{ env.CONTAINERVER }}
-          docker push ghcr.io/gitroomhq/postiz-app:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia solomonai/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          docker push solomonai/thinkthankmedia:${{ matrix.arch }}-${{ env.CONTAINERVER }}
 
-          docker tag localhost/postiz-devcontainer ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}
-          docker push ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }}
+          docker tag localhost/thinkthankmedia-devcontainer solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
+          docker push solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }}
 
-          docker tag ghcr.io/gitroomhq/postiz-devcontainer:${{ env.CONTAINERVER }} ghcr.io/gitroomhq/postiz-devcontainer:latest
-          docker push ghcr.io/gitroomhq/postiz-devcontainer:latest
+          docker tag solomonai/thinkthankmedia-devcontainer:${{ env.CONTAINERVER }} solomonai/thinkthankmedia-devcontainer:latest
+          docker push solomonai/thinkthankmedia-devcontainer:latest
 
   build-container-manifest:
     needs: [build-containers, build-containers-common]
@@ -78,8 +78,8 @@ jobs:
           CONTAINERVER: ${{ needs.build-containers-common.outputs.containerver }}
         run: |
           docker manifest create \
-            ghcr.io/gitroomhq/postiz-app:latest \
-            ghcr.io/gitroomhq/postiz-app:amd64-${{ env.CONTAINERVER }} \
-            ghcr.io/gitroomhq/postiz-app:arm64-${{ env.CONTAINERVER }}
+            solomonai/thinkthankmedia:latest \
+            solomonai/thinkthankmedia:amd64-${{ env.CONTAINERVER }} \
+            solomonai/thinkthankmedia:arm64-${{ env.CONTAINERVER }}
 
-          docker manifest push ghcr.io/gitroomhq/postiz-app:latest
+          docker manifest push solomonai/thinkthankmedia:latest
