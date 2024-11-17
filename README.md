@@ -58,6 +58,8 @@
 
 <br />
 
+ ## Developer Guide
+Please refer to the [Developer Guide](https://docs.postiz.com/installation/development) for more information on how to contribute to this project.
 
 <p align="center">
   <br /><br /><br />
