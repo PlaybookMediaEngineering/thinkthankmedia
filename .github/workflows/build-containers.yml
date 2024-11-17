@@ -20,15 +20,15 @@ jobs:
 
   build-containers:
     needs: build-containers-common
-    strategy: 
+    strategy:
       matrix:
+        os: [ubuntu-latest]
         include:
-          - runnertags: ubuntu-latest
+          - os: ubuntu-latest
+            release_suffix: ubuntu
             arch: amd64
-          - runnertags: [self-hosted, ARM64]
-            arch: arm64
-
-    runs-on: ${{ matrix.runnertags }}
+        platform: [linux/amd64]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
