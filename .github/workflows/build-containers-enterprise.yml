@@ -84,7 +84,5 @@ jobs:
         run: |
           docker manifest create \
             feelguuds/thinkthankmedia-enterprise:latest \
-            feelguuds/thinkthankmedia-enterprise:${{ env.CONTAINERVER }} \
-            feelguuds/thinkthankmedia-enterprise:${{ env.CONTAINERVER }}
-
+            feelguuds/thinkthankmedia-enterprise:amd64-${{ env.CONTAINERVER }} 
           docker manifest push feelguuds/thinkthankmedia-enterprise:latest
