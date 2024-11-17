@@ -57,6 +57,8 @@ jobs:
         run: |
           docker tag localhost/thinkthankmedia feelguuds/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
           docker push feelguuds/thinkthankmedia-enterprise:${{ matrix.arch }}-${{ env.CONTAINERVER }}
+          
+          docker tag localhost/thinkthankmedia feelguuds/thinkthankmedia-enterprise:latest
           docker push feelguuds/thinkthankmedia-enterprise:latest
 
           docker tag localhost/thinkthankmedia-devcontainer feelguuds/thinkthankmedia-devcontainer-enterprise:${{ env.CONTAINERVER }}
