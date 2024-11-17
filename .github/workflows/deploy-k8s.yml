@@ -66,10 +66,10 @@ jobs:
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{env.cluster}}
           
           # Create namespace if it doesn't exist
-          kubectl create namespace platform --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create namespace thinkthankmedia --dry-run=client -o yaml | kubectl apply -f -
           
           # Check if release exists
-          if ! helm status thinkthankmedia -n platform >/dev/null 2>&1; then
+          if ! helm status thinkthankmedia -n thinkthankmedia >/dev/null 2>&1; then
             echo "No existing release found. Performing fresh installation..."
             helm install thinkthankmedia ./charts/charts/postiz \
               --values ./charts/charts/postiz/values.yaml \
