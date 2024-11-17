@@ -73,23 +73,23 @@ jobs:
               --set env.FRONTEND_URL="http://localhost:4200" \
               --set env.NEXT_PUBLIC_BACKEND_URL="http://localhost:3000" \
               --set env.BACKEND_INTERNAL_URL="http://backend:3000" \
-              --set env.UPLOAD_DIRECTORY=${{ secrets.UPLOAD_DIRECTORY }} \
-              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=${{ secrets.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY }} \
+              --set env.UPLOAD_DIRECTORY=thinkthankmedia-uploads \
+              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=thinkthankmedia-uploads-public \
               --set env.NX_ADD_PLUGINS="false" \
               --set env.IS_GENERAL="true" \
               --set env.EMAIL_PROVIDER="resend" \
               --set env.EMAIL_FROM_NAME="thinkthankmedia" \
               --set env.EMAIL_FROM_ADDRESS="team@inbox.solomon-ai.app" \
-              --set env.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
-              --set env.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
-              --set env.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
-              --set env.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
-              --set env.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
-              --set env.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
-              --set env.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
+              --set secrets.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
+              --set secrets.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
+              --set secrets.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
+              --set secrets.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
+              --set secrets.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
+              --set secrets.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
+              --set secrets.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
               --set secrets.DATABASE_URL=${{ secrets.DATABASE_URL }} \
               --set secrets.REDIS_URL=${{ secrets.REDIS_URL }} \
-              --namespace platform \
+              --namespace thinkthankmedia \
               --create-namespace \
               --timeout 10m
           else
@@ -99,22 +99,22 @@ jobs:
               --set env.FRONTEND_URL="http://localhost:4200" \
               --set env.NEXT_PUBLIC_BACKEND_URL="http://localhost:3000" \
               --set env.BACKEND_INTERNAL_URL="http://backend:3000" \
-              --set env.UPLOAD_DIRECTORY=${{ secrets.UPLOAD_DIRECTORY }} \
-              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=${{ secrets.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY }} \
+              --set env.UPLOAD_DIRECTORY=thinkthankmedia-uploads \
+              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=thinkthankmedia-uploads-public \
               --set env.NX_ADD_PLUGINS="false" \
               --set env.IS_GENERAL="true" \
               --set env.EMAIL_PROVIDER="resend" \
               --set env.EMAIL_FROM_NAME="thinkthankmedia" \
               --set env.EMAIL_FROM_ADDRESS="team@inbox.solomon-ai.app" \
-              --set env.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
-              --set env.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
-              --set env.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
-              --set env.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
-              --set env.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
-              --set env.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
-              --set env.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
+              --set secrets.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
+              --set secrets.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
+              --set secrets.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
+              --set secrets.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
+              --set secrets.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
+              --set secrets.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
+              --set secrets.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
               --set secrets.DATABASE_URL=${{ secrets.DATABASE_URL }} \
               --set secrets.REDIS_URL=${{ secrets.REDIS_URL }} \
-              --namespace platform \
+              --namespace thinkthankmedia \
               --timeout 10m
           fi
