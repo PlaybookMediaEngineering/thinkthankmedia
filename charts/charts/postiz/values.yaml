@@ -96,9 +96,9 @@ env:
   CLOUDFLARE_ACCOUNT_ID: ""
   CLOUDFLARE_ACCESS_KEY: ""
   CLOUDFLARE_SECRET_ACCESS_KEY: ""
-  CLOUDFLARE_BUCKETNAME: ""
+  CLOUDFLARE_BUCKETNAME: "thinkthankmedia"
   CLOUDFLARE_BUCKET_URL: ""
-
+  CLOUDFLARE_REGION: "ENAM"
 # Sensitive environment variables (to be stored in Secrets)
 secrets:
   DATABASE_URL: ""

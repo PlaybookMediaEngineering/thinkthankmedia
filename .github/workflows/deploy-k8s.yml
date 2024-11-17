@@ -1,0 +1,120 @@
+name: Production Deployment - ThinkThank Media
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  packages: write
+
+env:
+  KUBERNETES_VERSION: 1.26.0
+  HELM_CHART_PATH: helm-charts/thinkthankmedia
+  DOCKER_IMAGE: docker.io/thinkthankmedia/thinkthankmedia
+  GHCR_REGISTRY: ghcr.io/groundnuty
+  K8S_VERSION: "1.28.0"
+  HELM_VERSION: 3.8.1
+  GO_VERSION: 1.21.x
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: .
+      cluster: ${{ secrets.PROD_CLUSTER_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update SHA
+        run: echo $GITHUB_SHA > $GITHUB_WORKSPACE/sha/_meta
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Add Helm repositories
+        working-directory: ${{env.working-directory}}
+        run: |
+          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
+
+      - name: Build Helm dependencies
+        working-directory: ${{env.working-directory}}
+        run: |
+          helm dependency build ./charts/charts/postiz
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+      - name: Deploy To Production Environment
+        working-directory: ${{env.working-directory}}
+        run: |
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{env.cluster}}
+          
+          # Create namespace if it doesn't exist
+          kubectl create namespace platform --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Check if release exists
+          if ! helm status thinkthankmedia -n platform >/dev/null 2>&1; then
+            echo "No existing release found. Performing fresh installation..."
+            helm install thinkthankmedia ./charts/charts/postiz \
+              --values ./charts/charts/postiz/values.yaml \
+              --set env.FRONTEND_URL="http://localhost:4200" \
+              --set env.NEXT_PUBLIC_BACKEND_URL="http://localhost:3000" \
+              --set env.BACKEND_INTERNAL_URL="http://backend:3000" \
+              --set env.UPLOAD_DIRECTORY=${{ secrets.UPLOAD_DIRECTORY }} \
+              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=${{ secrets.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY }} \
+              --set env.NX_ADD_PLUGINS="false" \
+              --set env.IS_GENERAL="true" \
+              --set env.EMAIL_PROVIDER="resend" \
+              --set env.EMAIL_FROM_NAME="thinkthankmedia" \
+              --set env.EMAIL_FROM_ADDRESS="team@inbox.solomon-ai.app" \
+              --set env.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
+              --set env.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
+              --set env.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
+              --set env.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
+              --set env.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
+              --set env.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
+              --set env.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
+              --set secrets.DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              --set secrets.REDIS_URL=${{ secrets.REDIS_URL }} \
+              --namespace platform \
+              --create-namespace \
+              --timeout 10m
+          else
+            echo "Existing release found. Performing upgrade..."
+            helm upgrade thinkthankmedia ./charts/charts/postiz \
+              --values ./charts/charts/postiz/values.yaml \
+              --set env.FRONTEND_URL="http://localhost:4200" \
+              --set env.NEXT_PUBLIC_BACKEND_URL="http://localhost:3000" \
+              --set env.BACKEND_INTERNAL_URL="http://backend:3000" \
+              --set env.UPLOAD_DIRECTORY=${{ secrets.UPLOAD_DIRECTORY }} \
+              --set env.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY=${{ secrets.NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY }} \
+              --set env.NX_ADD_PLUGINS="false" \
+              --set env.IS_GENERAL="true" \
+              --set env.EMAIL_PROVIDER="resend" \
+              --set env.EMAIL_FROM_NAME="thinkthankmedia" \
+              --set env.EMAIL_FROM_ADDRESS="team@inbox.solomon-ai.app" \
+              --set env.RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} \
+              --set env.CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }} \
+              --set env.CLOUDFLARE_ACCESS_KEY=${{ secrets.CLOUDFLARE_ACCESS_KEY }} \
+              --set env.CLOUDFLARE_SECRET_ACCESS_KEY=${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }} \
+              --set env.CLOUDFLARE_BUCKETNAME=${{ secrets.CLOUDFLARE_BUCKETNAME }} \
+              --set env.CLOUDFLARE_BUCKET_URL=${{ secrets.CLOUDFLARE_BUCKET_URL }} \
+              --set env.CLOUDFLARE_REGION=${{ secrets.CLOUDFLARE_REGION }} \
+              --set secrets.DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              --set secrets.REDIS_URL=${{ secrets.REDIS_URL }} \
+              --namespace platform \
+              --timeout 10m
+          fi
