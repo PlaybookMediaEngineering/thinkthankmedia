@@ -1,11 +1,11 @@
 import { Buyer } from '@gitroom/frontend/components/marketplace/buyer';
+import { isGeneralServerSide } from '@gitroom/helpers/utils/is.general.server.side';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
-import { Metadata } from 'next';
-import { isGeneralServerSide } from '@gitroom/helpers/utils/is.general.server.side';
 
 export const metadata: Metadata = {
-  title: `${isGeneralServerSide() ? 'Postiz' : 'Gitroom'} Marketplace`,
+  title: `${isGeneralServerSide() ? 'Instant' : 'Spur'} Marketplace`,
   description: '',
 };
 export default async function Index({

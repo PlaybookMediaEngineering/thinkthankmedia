@@ -1,9 +1,9 @@
 'use client';
 
-import { useCallback } from 'react';
-import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
 import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
+import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
+import { useCallback } from 'react';
 
 export const LogoutComponent = () => {
   const fetch = useFetch();
@@ -18,5 +18,5 @@ export const LogoutComponent = () => {
     }
   }, []);
 
-  return <div className="text-red-400 cursor-pointer" onClick={logout}>Logout from {isGeneral ? 'Postiz' : 'Gitroom'}</div>;
+  return <div className="text-red-400 cursor-pointer" onClick={logout}>Logout from {isGeneral ? 'Instant' : 'Spur'}</div>;
 };

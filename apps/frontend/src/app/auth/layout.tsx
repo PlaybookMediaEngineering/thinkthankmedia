@@ -55,7 +55,7 @@ export default async function AuthLayout({
                     />
                   </svg>
                 ) : (
-                  <div className="text-[40px]">Gitroom</div>
+                  <div className="text-[40px]">Spur</div>
                 )}
               </div>
             </div>

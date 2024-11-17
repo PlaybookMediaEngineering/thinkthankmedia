@@ -66,7 +66,7 @@ export const SettingsComponent = () => {
           {/*  <div>*/}
           {/*    <Checkbox disableForm={true} checked={true} name="Send Email" />*/}
           {/*  </div>*/}
-          {/*  <div>Show news with everybody in Gitroom</div>*/}
+          {/*  <div>Show news with everybody in Spur</div>*/}
           {/*</div>*/}
         </div>
       )}

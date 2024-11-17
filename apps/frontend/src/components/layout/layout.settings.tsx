@@ -122,7 +122,7 @@ export const LayoutSettings = ({ children }: { children: ReactNode }) => {
                         />
                       </svg>
                     ) : (
-                      'Gitroom'
+                      'Spur'
                     )}
                   </div>
                 </Link>
@@ -145,7 +145,7 @@ export const LayoutSettings = ({ children }: { children: ReactNode }) => {
                     <>
                       <div className="text-center mb-[20px] text-xl">
                         <h1 className="text-3xl">
-                          Join 1000+ Entrepreneurs Who Use Postiz
+                          Join 1000+ Entrepreneurs Who Use Instant
                           <br />
                           To Manage All Your Social Media Channels
                         </h1>

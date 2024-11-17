@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { isGeneralServerSide } from '@gitroom/helpers/utils/is.general.server.side';
 
 export const metadata: Metadata = {
-  title: `${isGeneralServerSide() ? 'Postiz' : 'Gitroom'} Marketplace`,
+  title: `${isGeneralServerSide() ? 'Instant' : 'Spur'} Marketplace`,
   description: '',
 };
 export default async function Index({
